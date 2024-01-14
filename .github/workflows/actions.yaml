@@ -45,7 +45,6 @@ jobs:
       run: |
         cd build-tools &&
         # run build-windows.bat
-        cd build-tools &&
         ./build-windows.bat
 
 
