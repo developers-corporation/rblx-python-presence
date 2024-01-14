@@ -7,5 +7,7 @@ edit config.json to add your token which can be found in a cookie called .ROBLOS
 > :warning: Do **NOT** share the token with anyone, keep it safe as it will allow bad actor to bypass all security features and access your account!
 
 On windows you can double click the rblx-python-presence executable
+
 On mac and linux you might need to chmod +x /path/to/your/directory/rblx-python-presence before you can double click it
-This will automatically run it in the background
+
+This program will automatically run in the background
