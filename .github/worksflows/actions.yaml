@@ -1,0 +1,83 @@
+name: "Build Roblox Python Rich Presence"
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    name: "Build Roblox Python Rich Presence"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python-version: [3.11]
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.11
+    # Mac Build
+    - name: "Build MacOS"
+      if: matrix.os == 'macos-latest'
+      run: |
+        cd build-tools &&
+        bash build-mac-universal.sh && 
+        cd .. &&
+        cd dist
+        chmod +x "./rblx-python-presence"
+
+       
+              
+    - name : "Upload Mac Build"
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v2
+      with:
+        name: rblx-python-presence-mac
+        path: |
+          ${{ github.workspace }}/dist/rblx-python-presence
+
+    # Windows Build
+    - name: "Build Windows"
+      if: matrix.os == 'windows-latest'
+      run: |
+        cd build-tools &&
+        # run build-windows.bat
+        cd build-tools &&
+        ./build-windows.bat
+
+
+        
+
+    - name : "Upload Windows Build"
+      if: matrix.os == 'windows-latest'
+      uses: actions/upload-artifact@v2
+      with:
+        name:  rblx-python-presence-windows
+        path: |
+          ${{ github.workspace }}/dist/rblx-python-presence.exe
+
+
+
+    # Linux Build
+    - name: "Build Linux"
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        cd build-tools &&
+        bash build-linux.sh &&
+        cd .. && 
+        cd dist
+        chmod +x "./rblx-python-presence"
+       
+
+    - name : "Upload Linux Build"
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v2
+      with:
+        name: rblx-python-presence-linux
+        path: |
+         
+          ${{ github.workspace }}/dist/rblx-python-presence
+    
