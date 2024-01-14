@@ -10,7 +10,7 @@ def main():
     RPC.connect()  # Start the handshake loop
 
     # Load the token from config.json
-    with open('config.json') as f:
+    with open('./config.json') as f:
         data = json.load(f)
         cookieToken = data['token']
 
