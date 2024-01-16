@@ -24,6 +24,11 @@ def main():
 
     while True:
         presence = RobloxAPI.getPresence(newToken)
+        # make sure its not none 
+        if presence is None:
+            RPC.clear()
+            time.sleep(15)
+            continue
         userPresenceType = presence['userPresences'][0]['userPresenceType']
 
         if prevPresenceType != userPresenceType:
@@ -48,6 +53,8 @@ def main():
             large_icon_url = RobloxAPI.getGameThumbnail(None)
         else:
             # Skip the update if presence type is not InGame or InStudio
+            # clear the presence
+            RPC.clear()
             continue
 
         RPC.update(
