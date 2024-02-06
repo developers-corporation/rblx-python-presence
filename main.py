@@ -98,7 +98,11 @@ class Roblox:
         # Cookie: .ROBLOSECURITY=token'
         # accept: application/json
         # content-type: application/json
-        r = requests.post(f'https://presence.roblox.com/v1/presence/users', headers={"Cookie": token, "accept": "application/json", "content-type": "application/json"}, data=json.dumps({"userIds": [self.userId]}))
+        try:
+            r = requests.post(f'https://presence.roblox.com/v1/presence/users', headers={"Cookie": token, "accept": "application/json", "content-type": "application/json"}, data=json.dumps({"userIds": [self.userId]}))
+        except requests.exceptions.ConnectionError as e:
+            print("Connection Error: ", e)
+            return
         if r.status_code == 200:
             presence = r.json()
             return presence
